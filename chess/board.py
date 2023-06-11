@@ -18,6 +18,7 @@ class ChessBoard:
         self.chess_pieces.append(chess_piece)
 
     def get_layout_for_piece(self, piece):
+        """"""
         for x in range(self.rows):
             for y in range(self.cols):
                 res = piece.set_area(x, y)
