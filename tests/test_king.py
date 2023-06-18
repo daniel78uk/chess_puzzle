@@ -1,5 +1,6 @@
 from chess.board import ChessBoard
 from chess.king import King
+from chess.rook import Rook
 
 
 def test_distrurb_place():
@@ -15,6 +16,30 @@ def test_can_be_placed():
 
     assert piece.can_be_placed(0, 0) == True
     assert piece.can_be_placed(3, 3) == False
+
+
+def test_set_area():
+    chess_board = ChessBoard(3, 3)
+    first_piece = King(chess_board)
+    second_piece = King(chess_board)
+    third_piece = King(chess_board)
+    fourth_piece = King(chess_board)
+
+    assert first_piece.set_area(0, 0) == True
+    assert second_piece.set_area(0, 1) == False
+    assert third_piece.set_area(1, 1) == False
+    assert fourth_piece.set_area(1, 0) == False
+
+
+def test_set_area_mixed_pieces():
+    chess_board = ChessBoard(3, 3)
+    first_piece = King(chess_board)
+    second_piece = King(chess_board)
+    third_piece = Rook(chess_board)
+
+    assert first_piece.set_area(0, 0) == True
+    assert second_piece.set_area(0, 2) == True
+    assert third_piece.set_area(1, 1) == False
 
 
 def test_spread_cells_top_left():

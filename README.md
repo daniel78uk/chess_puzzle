@@ -1,6 +1,6 @@
 # Chess unique layouts
 
-Description hidden
+Description hidden.
 
 # Getting started
 
@@ -8,12 +8,12 @@ Please run make from your local machine.
 
 `make`
 
-This will isntall all dependencies
+This will install all dependencies.
 
 
 # Solution
 
-An exampele on how the solution is supposed to run can be found in the `test_board.py`, which was setup to test the first layout.
+To get the solution run `make run-solution`.
+This will save the solution in a file: `test.txt`.
 
-
-To find all layouts the solution would be to permutate the order of the chess pieces and run the `get_layout` function in the `ChessBoard` class.
+Some assumptions have been made on the solution which can be seen int he file

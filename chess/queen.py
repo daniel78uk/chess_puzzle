@@ -5,44 +5,49 @@ class Queen(ChessPiece):
     symbol = "Q"
 
     def __init__(self, board):
-        self.chessboard = board
+        ChessPiece.__init__(self, board)
 
-    def can_be_placed(self, row, col):
-        """This function checks if a piece can be placed
+    def get_movements(self, row, col):
+        """
+        Gets all possible movements for the chess piece
 
         Args:
             row (int): row
             col (int): col
 
         Returns:
-            bool: if piece can be placed
+            arr: list of movements for the chess piece
         """
-        available = False
+        movements = []
+        max_dimension = max(self.chessboard.rows, self.chessboard.cols)
 
-        for x in range(max(self.chessboard.rows, self.chessboard.cols)):
-            if (
-                (col - x) < 0
-                or ((col + x) > self.chessboard.cols - 1)
-                or (row - x) < 0
-                or ((row + x) > self.chessboard.rows - 1)
-            ):
-                break
+        movements.append([row, col])
 
-            if (
-                not self.disturbs_space(row - x, col - x)
-                or not self.disturbs_space(row + x, col + x)
-                or not self.disturbs_space(row - x, col + x)
-                or not self.disturbs_space(row + x, col - x)
-                or not self.disturbs_space(row, x)
-                or not self.disturbs_space(x, col)
-            ):
-                available = True
-                break
+        for x in range(max_dimension):
+            if not self.is_out_of_bounds(row + x, col + x):
+                movements.append([row + x, col + x])
 
-        return available
+            if not self.is_out_of_bounds(row + x, col - x):
+                movements.append([row + x, col - x])
+
+            if not self.is_out_of_bounds(row - x, col + x):
+                movements.append([row - x, col + x])
+
+            if not self.is_out_of_bounds(row - x, col - x):
+                movements.append([row - x, col - x])
+
+            if not self.is_out_of_bounds(row, x):
+                movements.append([row, x])
+
+            if not self.is_out_of_bounds(x, col):
+                movements.append([x, col])
+
+        return movements
 
     def mark_threatened_cells(self):
-        """This function marks cells as threatened so that other piaces cannot be placed"""
+        """
+        This function marks cells as threatened so that other piaces cannot be placed
+        """
 
         for c in range(max(self.chessboard.rows, self.chessboard.cols)):
             if self.placement_exist(self.row - c, self.col - c):

@@ -15,15 +15,70 @@ def test_board_creation():
     assert chess_board.board[0] == ["", "", ""]
 
 
-def test_example_layout_3_x_3():
+def test_single_case_layout_3_x_3():
     chess_board = ChessBoard(3, 3)
 
-    expected_results = [["K", "", "K"], ["", "", ""], ["", "R", ""]]
+    expected_results = [["", "R", ""], ["", "", ""], ["K", "", "K"]]
+    chess_board.add_chess_piece(Rook(chess_board))
+    chess_board.add_chess_piece(King(chess_board))
+    chess_board.add_chess_piece(King(chess_board))
 
+    chess_board.calculate_layout(chess_board.chess_pieces, chess_board.cells)
+
+    layout = chess_board.layouts[0]
+
+    assert layout == expected_results
+
+
+def test_example_all_layouts_3_x_3():
+    chess_board = ChessBoard(3, 3)
+
+    expected_results = [
+        [["K", "", "K"], ["", "", ""], ["", "R", ""]],
+        [["K", "", ""], ["", "", "R"], ["K", "", ""]],
+        [["", "", "K"], ["R", "", ""], ["", "", "K"]],
+        [["", "R", ""], ["", "", ""], ["K", "", "K"]],
+    ]
     chess_board.add_chess_piece(King(chess_board))
     chess_board.add_chess_piece(King(chess_board))
     chess_board.add_chess_piece(Rook(chess_board))
 
-    chess_board.get_layout()
+    layouts = chess_board.get_results()
 
-    assert chess_board.board == expected_results
+    assert layouts[0] == expected_results[0]
+    assert layouts[1] == expected_results[2]
+    assert layouts[2] == expected_results[1]
+    assert layouts[3] == expected_results[3]
+
+
+def test_example_layout_4_x_4():
+    chess_board = ChessBoard(4, 4)
+
+    expected_results = [
+        [["", "N", "", "N"], ["", "", "R", ""], ["", "N", "", "N"], ["R", "", "", ""]],
+        [["", "N", "", "N"], ["R", "", "", ""], ["", "N", "", "N"], ["", "", "R", ""]],
+        [["R", "", "", ""], ["", "N", "", "N"], ["", "", "R", ""], ["", "N", "", "N"]],
+        [["", "", "R", ""], ["", "N", "", "N"], ["R", "", "", ""], ["", "N", "", "N"]],
+        [["", "R", "", ""], ["N", "", "N", ""], ["", "", "", "R"], ["N", "", "N", ""]],
+        [["", "", "", "R"], ["N", "", "N", ""], ["", "R", "", ""], ["N", "", "N", ""]],
+        [["N", "", "N", ""], ["", "", "", "R"], ["N", "", "N", ""], ["", "R", "", ""]],
+        [["N", "", "N", ""], ["", "R", "", ""], ["N", "", "N", ""], ["", "", "", "R"]],
+    ]
+
+    chess_board.add_chess_piece(Rook(chess_board))
+    chess_board.add_chess_piece(Rook(chess_board))
+    chess_board.add_chess_piece(Knight(chess_board))
+    chess_board.add_chess_piece(Knight(chess_board))
+    chess_board.add_chess_piece(Knight(chess_board))
+    chess_board.add_chess_piece(Knight(chess_board))
+
+    layouts = chess_board.get_results()
+
+    assert layouts[0] == expected_results[2]
+    assert layouts[1] == expected_results[5]
+    assert layouts[2] == expected_results[4]
+    assert layouts[3] == expected_results[6]
+    assert layouts[4] == expected_results[3]
+    assert layouts[5] == expected_results[7]
+    assert layouts[6] == expected_results[0]
+    assert layouts[7] == expected_results[1]

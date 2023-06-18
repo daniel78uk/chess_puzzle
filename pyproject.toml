@@ -4,10 +4,11 @@ version = "0.1.0"
 description = "unique layouts chess test"
 authors = ["Daniele Sangalli <196739+daniel78uk@users.noreply.github.com>"]
 readme = "README.md"
-packages = [{include = "chess", from = "src"}]
+packages = [{include = "chess"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+numpy = "^1.24.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
@@ -17,7 +18,7 @@ pre-commit = "^3.3.2"
 pylint = "^2.17.4"
 pytest-cov = "^4.1.0"
 pytest-watch = "^4.2.0"
-
+flake8 = "^6.0.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

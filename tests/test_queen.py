@@ -17,6 +17,17 @@ def test_can_be_placed():
     assert piece.can_be_placed(3, 3) == False
 
 
+def test_set_area():
+    chess_board = ChessBoard(3, 3)
+    first_piece = Queen(chess_board)
+    second_piece = Queen(chess_board)
+    third_piece = Queen(chess_board)
+
+    assert first_piece.set_area(0, 0) == True
+    assert second_piece.set_area(1, 1) == False
+    assert third_piece.set_area(2, 1) == True
+
+
 def test_spread_cells_top_left():
     chess_board = ChessBoard(3, 3)
     piece = Queen(chess_board)
@@ -51,3 +62,14 @@ def test_spread_cells_middle():
     assert chess_board.board[2][0] == "T"
     assert chess_board.board[2][1] == "T"
     assert chess_board.board[2][2] == "T"
+
+
+def test_spread_cells_6_x_9():
+    chess_board = ChessBoard(6, 9)
+    first_piece = Queen(chess_board)
+    second_piece = Queen(chess_board)
+    third_piece = Queen(chess_board)
+
+    assert first_piece.set_area(0, 0) == True
+    assert second_piece.set_area(1, 8) == True
+    assert third_piece.set_area(5, 1) == True

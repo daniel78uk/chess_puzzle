@@ -5,46 +5,54 @@ class King(ChessPiece):
     symbol = "K"
 
     def __init__(self, board):
-        self.chessboard = board
+        ChessPiece.__init__(self, board)
 
-    def can_be_placed(self, row, col):
-        """This function checks if a piece can be placed
+    def get_movements(self, row, col):
+        """
+        Gets all possible movements for the chess piece
 
         Args:
             row (int): row
             col (int): col
 
         Returns:
-            bool: if piece can be placed
+            arr: list of movements for the chess piece
         """
-        available = False
+        movements = []
 
-        if (
-            col < 0
-            or (col > self.chessboard.cols - 1)
-            or row < 0
-            or (row > self.chessboard.rows - 1)
-        ):
-            return False
+        movements.append([row, col])
 
-        # ensure that this space doesn't threaten an existing piece,
-        # if a location is neither empty, nor threatened, then a piece is in that location
-        if (
-            not self.disturbs_space(row + 1, col + 1)
-            or not self.disturbs_space(row - 1, col + 1)
-            or not self.disturbs_space(row + 1, col - 1)
-            or not self.disturbs_space(row - 1, col - 1)
-            or not self.disturbs_space(row, col + 1)
-            or not self.disturbs_space(row, col - 1)
-            or not self.disturbs_space(row + 1, col)
-            or not self.disturbs_space(row - 1, col)
-        ):
-            available = True
+        if not self.is_out_of_bounds(row, col + 1):
+            movements.append([row, col + 1])
 
-        return available
+        if not self.is_out_of_bounds(row, col - 1):
+            movements.append([row, col - 1])
+
+        if not self.is_out_of_bounds(row + 1, col):
+            movements.append([row + 1, col])
+
+        if not self.is_out_of_bounds(row + 1, col - 1):
+            movements.append([row + 1, col - 1])
+
+        if not self.is_out_of_bounds(row + 1, col + 1):
+            movements.append([row + 1, col + 1])
+
+        if not self.is_out_of_bounds(row - 1, col):
+            movements.append([row - 1, col])
+
+        if not self.is_out_of_bounds(row - 1, col - 1):
+            movements.append([row - 1, col - 1])
+
+        if not self.is_out_of_bounds(row - 1, col + 1):
+            movements.append([row - 1, col + 1])
+
+        return movements
 
     def mark_threatened_cells(self):
-        """This function marks cells as threatened so that other piaces cannot be placed"""
+        """
+        This function marks cells as threatened so that other piaces cannot be placed
+        """
+
         if self.placement_exist(self.row, self.col + 1):
             self.chessboard.board[self.row][
                 self.col + 1
