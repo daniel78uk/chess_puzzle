@@ -125,7 +125,7 @@ class ChessBoard:
 
         self.reset_board()
 
-        if len(cells) > 0:
+        if len(cells) > 0:  # this could be set to the lenght of the columns
             self.calculate_layout(chess_pieces, cells)
 
     def get_all_chess_pieces_permutations(self):
@@ -162,9 +162,20 @@ class ChessBoard:
 
         for layout in self.layouts:
             layouts.append(layout)
-            layouts.append(rotate_matrix(layout))
-            layouts.append(rotate_matrix(layout))
-            layouts.append(rotate_matrix(layout))
+
+            rotated_matrix_90 = rotate_matrix(layout)
+            rotated_matrix_180 = rotate_matrix(rotated_matrix_90)
+            # rotated_matrix_270 = rotate_matrix(rotated_matrix_180)
+
+            if self.rows == self.cols:
+                layouts.append(rotated_matrix_90)
+                # layouts.append(rotated_matrix_180) # this should be included
+                # layouts.append(rotated_matrix_270) # this should be included
+
+            if self.rows != self.cols:
+                layouts.append(
+                    rotated_matrix_180
+                )  # horizontal mirror also a vertical mirror should be included
 
         unique_layouts = unique_matrix_list(layouts)
 
