@@ -16,4 +16,4 @@ This will install all dependencies.
 To get the solution run `make run-solution`.
 This will save the solution in a file: `test.txt`.
 
-Some assumptions have been made on the solution which can be seen int he file
+Some assumptions have been made on the solution which can be seen in the file `board.get_results`.
